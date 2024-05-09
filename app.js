@@ -1,7 +1,8 @@
 const express = require('express');
 const axios = require('axios');
-require('./cronJob');
-const { Address, Transaction,EthereumPrice } = require('./database');
+const path = require("path");
+require('./src/cronJob');
+const { Address, Transaction,EthereumPrice } = require('./src/database');
 
 const app = express();
 app.use(express.json());
@@ -10,7 +11,7 @@ const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
 const etherscanApiUrl = 'https://api.etherscan.io/api';
 
 app.get('/',  (req, res) => {
-    res.send('Welcome to the Ethereum price and transaction API!');
+    res.sendFile(path.join(__dirname, "/src/view/serverRunning.html"));
 })
 
 app.get('/ethereum-price', async (req, res) => {
