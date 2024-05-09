@@ -11,7 +11,7 @@ cron.schedule('*/10 * * * *', async () => {
     const ethereumPriceDoc = new EthereumPrice({ price: ethereumPrice });
     await ethereumPriceDoc.save();
 
-    console.log(`Ethereum price fetched every 10 min is : ${ethereumPrice}`);
+    console.log(`${new Date().toLocaleTimeString()} Minutes Ethereum price : ${ethereumPrice}`);
   } catch (error) {
     console.error(error);
   }
