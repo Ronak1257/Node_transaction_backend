@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+require('./cronJob');
 const { Address, Transaction } = require('./database');
 
 const app = express();
@@ -11,6 +12,22 @@ const etherscanApiUrl = 'https://api.etherscan.io/api';
 app.get('/',  (req, res) => {
     res.send('Welcome to the Ethereum price and transaction API!');
 })
+
+app.get('/ethereum-price', async (req, res) => {
+    try {
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=inr');
+        const ethereumPrice = response.data.ethereum.inr;
+
+        // Store the Ethereum price in the database
+        const ethereumPriceDoc = new EthereumPrice({ price: ethereumPrice });
+        await ethereumPriceDoc.save();
+
+        res.json({ price: ethereumPrice });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch Ethereum price' });
+    }
+});
 
 app.get('/transactions/:address', async (req, res) => {
     try {

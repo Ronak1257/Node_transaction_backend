@@ -13,31 +13,44 @@ db.once('open', () => {
 });
 
 const transactionSchema = new mongoose.Schema({
-    address: String,
-    transactions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Transaction' }]
+  address: String,
+  transactions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Transaction' }]
+});
+
+const ethereumPriceSchema = new mongoose.Schema({
+  price: {
+    type: Number,
+    required: true,
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Transaction = mongoose.model('Transaction', {
-    blockNumber: Number,
-    timeStamp: Number,
-    hash: String,
-    nonce: Number,
-    blockHash: String,
-    from: String,
-    contractAddress: String,
-    to: String,
-    value: String,
-    tokenName: String,
-    tokenSymbol: String,
-    transactionIndex: Number,
-    gas: Number,
-    gasPrice: Number,
-    gasUsed: Number,
-    cumulativeGasUsed: Number,
-    input: String,
-    confirmations: Number
+  blockNumber: Number,
+  timeStamp: Number,
+  hash: String,
+  nonce: Number,
+  blockHash: String,
+  from: String,
+  contractAddress: String,
+  to: String,
+  value: String,
+  tokenName: String,
+  tokenSymbol: String,
+  transactionIndex: Number,
+  gas: Number,
+  gasPrice: Number,
+  gasUsed: Number,
+  cumulativeGasUsed: Number,
+  input: String,
+  confirmations: Number
 });
 
 const Address = mongoose.model('Address', transactionSchema);
 
-module.exports = { Address, Transaction };
+const EthereumPrice = mongoose.model('EthereumPrice', ethereumPriceSchema);
+
+module.exports = { Address, Transaction, EthereumPrice };
