@@ -92,7 +92,7 @@ app.get('/balance/:address', async (req, res, next) => {
 app.post('/transactions/:address', async (req, res, next) => {
   try {
     const address = req.params.address;
-    const response = await axios.get(`${etherscanApiUrl}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${etherscanApiKey}`);
+    const response = await axios.get(`${etherscanApiUrl}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=WGBI7DXBISQZJFBH4AMAQP4G58Q8U9PJMJ`);
     const transactions = response.data.result;
 
     // Store transactions in database
