@@ -4,9 +4,8 @@ require('./cronJob');
 const { Address, Transaction,EthereumPrice } = require('./database');
 
 const app = express();
-app.use(express.json());
 
-const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
+const etherscanApiKey = 'WGBI7DXBISQZJFBH4AMAQP4G58Q8U9PJMJ';
 const etherscanApiUrl = 'https://api.etherscan.io/api';
 
 app.get('/',  (req, res) => {
@@ -21,7 +20,7 @@ app.get('/ethereum-price', async (req, res) => {
         // Store the Ethereum price in the database
         const ethereumPriceDoc = new EthereumPrice({ price: ethereumPrice });
         await ethereumPriceDoc.save();
-        console.log(`${new Date().toLocaleTimeString()} Minutes Ethereum price : ${ethereumPrice}`);
+        console.log(`${new Date().toLocaleTimeString()} Minutes Ethereum price : ${ethereumPrice}`); 
 
         res.json({ price: ethereumPrice });
     } catch (error) {
